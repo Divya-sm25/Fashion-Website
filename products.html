@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <style>
+        /* Main container for the products page */
+.products-page {
+    display: flex;
+    padding: 20px;
+    font-family: 'Futura PT', sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Sidebar styling */
+.sidebar {
+    margin-top:50px;
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 20px;
+}
+
+/* Sidebar Title */
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+    font-weight: 700;
+    border-bottom: 2px solid #e8e8e8;
+    padding-bottom: 10px;
+}
+
+/* Category List */
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Category Items Styling */
+.category-item, .subcategory-item {
+    display: block;
+    padding: 12px;
+    margin: 5px 0;
+    font-size: 18px;
+    color: #555;
+    text-decoration: none;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+/* Hover Effect for Category Items */
+.category-item:hover, .subcategory-item:hover {
+    background-color: #f1f1f1;
+    border: 2px solid #555;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Active/Selected Category */
+.category-item.active, .subcategory-item.active {
+    background-color: #333;
+    color: #fff;
+    border: 2px solid #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .products-page {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Veritas Vogue</h1>
+        </div>
+        <nav>
+            <ul class="navbar">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="Collections.html">Collections</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="#eyewear">Eyewear</a></li>
+                <li><a href="#jewelry">Jewelry</a></li>
+                <li><a href="#contact">Contact us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="products-page">
+        <div class="sidebar">
+            <h2>Categories</h2>
+            <ul class="category-list">
+                <li><a href="#" class="subcategory-item" id="men-wear" data-category="men-wear">Men Wear</a></li>
+                <li><a href="#" class="category-item" data-category="wedding">Wedding</a></li>
+                <li><a href="#" class="category-item" data-category="eyewear">Eyewear</a></li>
+                <li><a href="#" class="category-item" data-category="jewelry">Jewelry</a></li>
+                <li><a href="#" class="category-item" data-category="bridesmaid">Bridesmaid</a></li>
+            </ul>
+        </div>
+    
+        <section class="products-section">
+            <div class="products-container" id="products-container">
+                <!-- Product cards will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
+    
+
+    <script>
+        document.getElementById('men-wear').addEventListener('click', function(e) {
+    e.preventDefault(); // Prevent default link behavior
+
+    // Fetch men's wear items from the backend
+    fetch('connection.php')
+        .then(response => response.json())
+        .then(data => {
+            // Clear the existing products
+            const productsContainer = document.getElementById('products-container');
+            productsContainer.innerHTML = '';
+
+            // Loop through the data and create product cards
+            data.forEach(item => {
+                const productCard = `
+                    <div class="product-card" onclick="window.location.href='product-details.html?id=${item.id}'">
+                        <img src="${item.image_url}" alt="${item.name}" class="product-image">
+                        <h3>${item.name}</h3>
+                   
+                        
+                        <p>Price: $${item.price}</p>
+                        
+                        <p>${item.description}</p>
+                        
+                    </div>
+                `;
+                productsContainer.innerHTML += productCard;
+            });
+        })
+        .catch(error => console.error('Error fetching mens wear items:', error));
+});
+
+    </script>
+</body>
+</html>

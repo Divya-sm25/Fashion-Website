@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login or Sign In</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* styles.css */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'futura';
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+header {
+    width: 100%;
+    background-color: #333;
+    padding: 1rem 0;
+    text-align: center;
+    color: #fff;
+}
+
+.logo h1 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+main {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 5px;
+    margin: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+form {
+    margin-top: 1rem;
+}
+
+form div {
+    margin-bottom: 1.2rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button[type="submit"]:hover {
+    background-color: #555;
+}
+
+/* Forms visibility */
+#loginForm, #signInForm {
+    background-color: #f4f4f4;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    z-index: 10;
+}
+
+#loginForm h3, #signInForm h3 {
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+#loginForm button, #signInForm button {
+    margin-top: 1rem;
+}
+
+button[onclick*='close'] {
+    background-color: #777;
+    margin-top: 1rem;
+}
+
+button[onclick*='close']:hover {
+    background-color: #555;
+}
+
+/* Background overlay when forms are open */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 5;
+}
+
+#loginForm[style*='block'], 
+#signInForm[style*='block'] {
+    display: block;
+}
+
+body #loginForm[style*='block'] ~ ::before, 
+body #signInForm[style*='block'] ~ ::before {
+    display: block;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Veritas Vogue</h1>
+        </div>
+    </header>
+
+    <main>
+        <h2>Welcome</h2>
+        <div>
+            <button onclick="document.getElementById('loginForm').style.display='block'">Login</button>
+            <button onclick="document.getElementById('signInForm').style.display='block'">Sign In</button>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginForm" style="display:none;">
+            <h3>Login</h3>
+            <form action="login.php" method="POST">
+                <div>
+                    <label for="login_email">Email:</label>
+                    <input type="email" id="login_email" name="login_email" required>
+                </div>
+                <div>
+                    <label for="login_password">Password:</label>
+                    <input type="password" id="login_password" name="login_password" required>
+                </div>
+                
+                <button type="submit">Login</button>
+            </form>
+            <button onclick="document.getElementById('loginForm').style.display='none'">Close</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <div id="signInForm" style="display:none;">
+            <h3>Sign In</h3>
+            <form action="signin.php" method="POST">
+                <div>
+                    <label for="sign_in_email">Email:</label>
+                    <input type="email" id="sign_in_email" name="sign_in_email" required>
+                </div>
+                <div>
+                    <label for="sign_in_password">Password:</label>
+                    <input type="password" id="sign_in_password" name="sign_in_password" required>
+                </div>
+                <div>
+                    <label for="user_type">User Type:</label>
+                    <select id="user_type" name="user_type" required>
+                        <option value="buyer">Buyer</option>
+                        <option value="seller">Seller</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="sign_in_brand_name">Brand Name:</label>
+                    <input type="text" id="sign_in_brand_name" name="sign_in_brand_name" required>
+                </div>
+                <button type="submit">Sign In</button>
+            </form>
+            <button onclick="document.getElementById('signInForm').style.display='none'">Close</button>
+        </div>
+    </main>
+</body>
+</html>
